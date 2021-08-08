@@ -1,0 +1,140 @@
+系统使用：
+ssh:
+ssh 用户名@IP地址 -p 端口号
+root's pwd:  215njupt215
+用户名：ah 密码：ah123456
+用户名：xjw 密码：xjw123456
+用户名：wy 密码：wy123456
+用户名：hl 密码：hl123456
+用户名：zc 密码：zc123456
+安装deb软件:  
+sudo dpkg -i 文件名.deb
+delete all lines by vim:  
+在vim的普通模式下键入“ggdG”即可删除其中全部内容。
+切换到root用户：
+sudo su
+切换到user用户：
+su - username  // -不要丢
+给root用户设置密码：(设置完之后可以直接通过su root切换到root用户)
+sudo password root
+添加用户：(默认家目录在/home下)
+useradd  xxx
+添加用户并指定目录：
+useradd –d  /home/sam -m sam
+给指定用户设置密码：
+passwd xxx
+显示当前目录路径：
+pwd
+查看显卡型号:  
+nvidia-smi
+监控显卡温度：
+watch -n 1 nvidia-smi # 1表示每1秒刷新一次
+nvidia-smi -l 1
+Unlock file or directory:
+sudo chmod -R 777 checkpoint 
+
+实验环境相关：
+一键换清华源：（不是太好用）
+wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py
+# For yourself
+python oh-my-tuna.py
+# ...or for everyone!
+sudo python oh-my-tuna.py --global
+# Get some help
+python oh-my-tuna.py -h
+Annaconda换源：（推荐用中科大源）
+https://www.cnblogs.com/dereen/p/anaconda_tencent_mirrors.html
+pip使用豆瓣源：（临时）
+sudo pip install xxxxxx -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com/simple 
+pip使用豆瓣源：（永久）
+mkdir ~/.pip
+vim ~/.pip/pip.conf
+[global]
+index-url = http://pypi.douban.com/simple
+trusted-host = pypi.douban.com
+//换源之后记得更新一下
+apt update
+apt upgrade
+
+
+https://zhuanlan.zhihu.com/p/50449900
+
+
+关于docker：
+一、ubuntu安装docker
+    #更新软件源
+    sudo apt update
+    #安装docker
+    sudo apt install docker.io
+    #基本命令
+    #查看docker服务运行状态
+    sudo systemctl status docker
+    #启动docker服务
+    sudo systemctl start docker
+    #停止docker服务
+    sudo systemctl stop docker
+    #查看所有本地镜像
+    sudo docker images
+    #查看正在运行的容器
+    sudo docker ps
+    #查看所有容器
+    sudo docker ps -a
+    #删除本地镜像 -f表示强制删除(可选)
+    sudo docker rmi -f [镜像id]
+    #删除指定容器 
+    sudo docker rm [容器Id|容器名]
+    
+
+二、使用非root用户运行docker命令
+    #1 添加docker用户组(一般安装docker时会自动添加)
+    sudo groupadd docker 
+    #2 将指定用户添加到docker用户组中 注:将USER替换为自己的用户名
+    sudo gpasswd -a USER docker
+    #3 重启docker服务
+    sudo systemctl restart docker
+    #4 退出SSH连接，重新登录
+    
+三、ubuntu完全卸载docker
+https://www.jianshu.com/p/c03044dbeaaf
+
+
+docker.service: Failed with result 'exit-code'.
+Failed to start Docker Application Container Engine.
+docker.service: Scheduled restart job, restart counter is at 4.
+Stopped Docker Application Container Engine.
+
+vim /etc/docker/daemon.json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+    "registry-mirrors": ["https://4zgajege.mirror.aliyuncs.com"]
+}
+中科大：https://docker.mirrors.ustc.edu.cn
+systemctl restart docker
+
+四、安装NVIDIA Container Toolkit
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/experimental/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+
+sudo apt-get update
+
+sudo apt-get install -y nvidia-docker2
+
+sudo systemctl restart docker
+
+Run docker container:
+
+docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --rm nvidia/cuda:10.0-base nvidia-smi
+
+docker run -it --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all -v /home/zc/GaitSet:/home/projects f20d42e5d606 /bin/bash
+
+
+nvidia-docker run -it -v /home/zc/GaitSet:/home/projects 63994d8624a2 /bin/bash
+
