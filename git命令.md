@@ -65,9 +65,3 @@ git push origin main
 
 ```
 
-## 还好
-
-~~~java
-int a;
-~~~
-
