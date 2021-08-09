@@ -56,6 +56,7 @@ docker build -t yolov5:v1 .  //最后的.千万别忘了
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --rm nvidia/cuda:10.0-base nvidia-smi
 
 docker run -it --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all -v /home/zc/GaitSet:/home/projects f20d42e5d606 /bin/bash
+
 ### 常用 将本地目录映射到服务器目录
 nvidia-docker run -it -v /home/zc/GaitSet:/home/projects 63994d8624a2 /bin/bash
 ```
