@@ -7,6 +7,20 @@ root's pwd:  215njupt215
 用户名：wy 密码：wy123456
 用户名：hl 密码：hl123456
 用户名：zc 密码：zc123456
+
+给普通用户root权限：
+vi /etc/sudoers
+添加zc ALL=(ALL:ALL) ALL
+
+Linux 下shell显示-bash-4.1$不显示用户名路径的解决方法:
+vi ~/.bash_profile  
+export PS1='[\u@\h \W]\$'
+source ~/.bash_profile
+
+Linux下出现permission denied的解决办法:
+sudo chmod -R 777  /工作目录
+例如:sudo chmod -R 777  /home/zc
+
 安装deb软件:  
 sudo dpkg -i 文件名.deb
 delete all lines by vim:  
